@@ -18,8 +18,7 @@ const _layout = () => {
         },
         tabBarStyle:{
           backgroundColor:'black',
-          borderRadius:50,
-          margin:5,
+          width:'100%'
         }
       }}
     >
