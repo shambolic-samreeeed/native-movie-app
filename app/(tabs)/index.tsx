@@ -13,6 +13,7 @@ import {
 import SearchBar from "../components/SearchBar";
 import { icons } from "../constants/icons";
 import { images } from "../constants/images";
+import MovieCard from "../components/MovieCard";
 
 export default function Index() {
   const router = useRouter();
@@ -70,7 +71,8 @@ export default function Index() {
               <FlatList
                 data={movies}
                 renderItem={({ item }) => (
-                  <Text style={styles.movieTexts}>{item.title}</Text>
+                  <MovieCard 
+                  {...item}/>
                 )}
                 keyExtractor={(item) => item.id.toString()}
                 numColumns={3}
@@ -90,7 +92,7 @@ export default function Index() {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   heading: {
     color: "white",
     fontSize: 18,
