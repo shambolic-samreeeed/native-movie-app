@@ -1,10 +1,27 @@
-import { Image, ScrollView, View } from "react-native";
+import { fetchMovies } from "@/services/api";
+import useFetch from "@/services/useFetch";
+import { useRouter } from "expo-router";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import SearchBar from "../components/SearchBar";
 import { icons } from "../constants/icons";
 import { images } from "../constants/images";
-import SearchBar from "../components/SearchBar";
-
 
 export default function Index() {
+  const router = useRouter();
+
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError,
+  } = useFetch(() => fetchMovies({ query: "" }));
   return (
     <View style={{ flex: 1, backgroundColor: "black" }}>
       <Image
@@ -36,12 +53,51 @@ export default function Index() {
           }}
         />
 
-        <View style={{ flex:1, marginTop:5}}>
+        {moviesLoading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : moviesError ? (
+          <Text>Error:{moviesError?.message}</Text>
+        ) : (
+          <View style={{ flex: 1, marginTop: 5 }}>
+            <SearchBar
+              onPress={() => router.push("/search")}
+              placeholder="Search "
+            />
 
-<SearchBar/>
+            <>
+              <Text style={styles.heading}> Latest movies</Text>
 
-        </View>
+              <FlatList
+                data={movies}
+                renderItem={({ item }) => (
+                  <Text style={styles.movieTexts}>{item.title}</Text>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={3}
+                columnWrapperStyle={{
+                  justifyContent: "flex-start",
+                  gap: 20,
+                  paddingRight: 5,
+                  marginBottom: 10,
+                }}
+                scrollEnabled={false}
+              />
+            </>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  heading: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  movieTexts: {
+    color: "white",
+  },
+});

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, TextInput, View } from 'react-native';
 import { icons } from '../constants/icons';
 
-const SearchBar = () => {
+interface Props{
+  placeholder: string;
+  onPress?: ()=>void;
+}
+const SearchBar = ({ placeholder, onPress} : Props) => {
   return (
     <View
       style={{
@@ -17,8 +21,14 @@ const SearchBar = () => {
     >
       <Image
         source={icons.search}
-        style={{ width: 20, height: 20, marginRight: 8 }}
+        style={{ width: 20, height: 20, marginRight: 8, borderColor:'white'}}
       />
+      <TextInput
+      onPress={onPress}
+      placeholder={placeholder}
+      value=''
+      onChangeText={()=>{}}
+      placeholderTextColor='white'/>
     </View>
   );
 };
