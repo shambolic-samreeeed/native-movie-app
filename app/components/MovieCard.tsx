@@ -28,7 +28,7 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date }: Movie
         <View style={styles.details}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.info}>
-            ⭐ {vote_average} | 📅 {release_date}
+            ⭐ {vote_average}
           </Text>
         </View>
       </TouchableOpacity>
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     backgroundColor: "#1a1a1a",
+    height:"100%",
+    width:"30%"
   },
   image: {
     width: "100%",
@@ -49,11 +51,12 @@ const styles = StyleSheet.create({
   },
   details: {
     padding: 10,
+    
   },
   title: {
     color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 12,
+    
   },
   info: {
     color: "gray",
